@@ -10,23 +10,26 @@
     <script type="text/babel">
       var Input = React.createClass({
         getInitialState: function() {
-          return {value: 'Hello!'};
+          return {value: 'hello'};
         },
-        handleChange: function(event) {
+        handleClick: function(event) {
           this.setState({value: event.target.value});
         },
-        render: function () {
+        render: function() {
           var value = this.state.value;
           return (
             <div>
-              <input type="text" value={value} onChange={this.handleChange} />
+              <input type="text" onChange={this.handleClick} />
               <p>{value}</p>
             </div>
           );
         }
       });
 
-      ReactDOM.render(<Input/>, document.getElementById('example'));
+      ReactDOM.render(
+        <Input />,
+        document.getElementById('example')
+      );
     </script>
   </body>
 </html>

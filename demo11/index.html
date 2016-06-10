@@ -9,39 +9,53 @@
   <body>
     <div id="example"></div>
     <script type="text/babel">
-var UserGist = React.createClass({
-  getInitialState: function() {
-    return {
-      username: '',
-      lastGistUrl: ''
-    };
-  },
+      var UserRepos = React.createClass({
+        getInitialState: function() {
+          return {
+            loading: true,
+            repos: []
+          };
+        },
+        componentDidMount: function() {
+          $.get(this.props.source, function(resp) {
+            var repos = [];
+            resp.map(function(item) {
+              repos.push(item.name);
+            });
+            if (this.isMounted()) {
+              this.setState({
+                loading: false,
+                repos: repos
+              });
+            }
+          }.bind(this));
+        },
+        render: function() {
+          if (this.state.loading) {
+            return <span>loading...</span>
+          } else {
+            return (
+              <ol>
+                {
+                  /*
+                  this.state.repos.map(function(item) {
+                    return <li>{item}</li>
+                  })
+                  */
+                  React.Children.map(this.state.repos, function(item) {
+                    return <li>{item}</li>
+                  })
+                }
+              </ol>
+            );
+          }
+        }
+      });
 
-  componentDidMount: function() {
-    $.get(this.props.source, function(result) {
-      var lastGist = result[0];
-      if (this.isMounted()) {
-        this.setState({
-          username: lastGist.owner.login,
-          lastGistUrl: lastGist.html_url
-        });
-      }
-    }.bind(this));
-  },
-
-  render: function() {
-    return (
-      <div>
-        {this.state.username}'s last gist is <a href={this.state.lastGistUrl}>here</a>.
-      </div>
-    );
-  }
-});
-
-ReactDOM.render(
-  <UserGist source="https://api.github.com/users/octocat/gists" />,
-  document.getElementById('example')
-);
+      ReactDOM.render(
+        <UserRepos source="https://api.github.com/users/lixiangyang/repos" />,
+        $('#example')[0]
+      );
     </script>
   </body>
 </html>

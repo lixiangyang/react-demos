@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
     <script src="../build/react.js"></script>
     <script src="../build/react-dom.js"></script>
     <script src="../build/browser.min.js"></script>
@@ -8,15 +9,15 @@
   <body>
     <div id="example"></div>
     <script type="text/babel">
-      var names = ['Alice', 'Emily', 'Kate'];
+      var names = ['张三', '王五', '赵六'];
 
       ReactDOM.render(
         <div>
-        {
-          names.map(function (name) {
-            return <div>Hello, {name}!</div>
-          })
-        }
+          {
+            names.map(function(name) {
+              return <div>Hello, {name}</div>;
+            })
+          }
         </div>,
         document.getElementById('example')
       );

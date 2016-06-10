@@ -9,36 +9,51 @@
     <div id="example"></div>
     <script type="text/babel">
       var Hello = React.createClass({
-        getInitialState: function () {
-          return {
-            opacity: 1.0
-          };
+        getInitialState: function() {
+          return {opacity: 1.0};
         },
-
-        componentDidMount: function () {
-          this.timer = setInterval(function () {
+        componentWillUpdate: function(nextProps, nextState) {
+          console.log('componentWillUpdate...');
+          console.log(nextProps.name);
+          console.log(nextState.opacity);
+        },
+        componentDidUpdate: function(prevProps, prevState) {
+          console.log('componentDidUpdate...');
+        },
+        componentWillReceiveProps: function(nextProps) {
+          // 已加载组件收到新的参数时调用
+          console.log('componentWillReceiveProps...');
+        },
+        shouldComponentUpdate: function(nextProps, nextState) {
+          // 组件判断是否重新渲染时调用
+          console.log('shouldComponentUpdate...');
+          return true;
+        },
+        componentWillMount: function() {
+          console.log('componentWillMount...');
+        },
+        componentDidMount: function() {
+          console.log('componentDidMount...');
+          this.timer = setInterval(function() {
             var opacity = this.state.opacity;
-            opacity -= .05;
+            opacity -= 0.05;
             if (opacity < 0.1) {
               opacity = 1.0;
             }
-            this.setState({
-              opacity: opacity
-            });
+
+            this.setState({opacity: opacity});
           }.bind(this), 100);
         },
-
-        render: function () {
+        render: function() {
+          var opacity = this.state.opacity;
           return (
-            <div style={{opacity: this.state.opacity}}>
-              Hello {this.props.name}
-            </div>
+            <p style={{opacity: opacity}}>Hello {this.props.name}</p>
           );
         }
       });
 
       ReactDOM.render(
-        <Hello name="world"/>,
+        <Hello name="React" />,
         document.getElementById('example')
       );
     </script>

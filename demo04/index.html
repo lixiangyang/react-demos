@@ -10,12 +10,18 @@
     <script type="text/babel">
       var HelloMessage = React.createClass({
         render: function() {
-          return <h1>Hello {this.props.name}</h1>;
+          return (
+            <div>
+              <a href={this.props.href} target="_blank">Hello {this.props.name}!</a>
+              <h2>Hello class:{this.props.className}</h2>
+              <h2>Hello for:{this.props.htmlFor}</h2>
+            </div>
+          );
         }
       });
 
       ReactDOM.render(
-        <HelloMessage name="John" />,
+        <HelloMessage name="React" href="https://www.baidu.com" className="myClass" htmlFor="myFor" />,
         document.getElementById('example')
       );
     </script>
